@@ -36,11 +36,11 @@
             <div v-for="tarefa in tasks" class="card horizontal">
               <div class="card-stacked">
                 <div class="card-content">
-                  <p>{{ tarefa.title }}</p>
-                  <span class="projeto">{{ tarefa.project }}</span>
+                  <p>{{tarefa.title}} <span class="new badge" data-badge-caption="">{{tarefa.dueTo}}</span> <div class="chip">{{tarefa.project}}</div></p>
                 </div>
                 <div class="card-action">
-                  <a href="#">This is a link</a>
+                  <a href="#"><i class="fa-solid fa-pen-to-square"></i></a>
+                  <a href="#"><i class="fa-solid fa-trash-can"></i></a>
                 </div>
               </div>
             </div>
