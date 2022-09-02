@@ -1,0 +1,14 @@
+{
+  "name": "vuecrud",
+  "version": "1.0.0",
+  "description": "todo list",
+  "main": "todo.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Eliel",
+  "license": "ISC",
+  "dependencies": {
+    "json-server": "^0.17.0"
+  }
+}

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- Materialize CSS CDN -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <!-- Fontawesome 6 CND-->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <nav class="orange darken-2">
+        <div class="nav-wrapper"></div>
+      </nav>
+
+      <div class="container">
+        <div class="section">
+          <!--   Icon Section   -->
+          <div class="row">
+            <!-- card de tarefa que repete para cada item do array -->
+            <div v-for="tarefa in tasks" class="card horizontal">
+              <div class="card-stacked">
+                <div class="card-content">
+                  <p>{{ tarefa.title }}</p>
+                  <span class="projeto">{{ tarefa.project }}</span>
+                </div>
+                <div class="card-action">
+                  <a href="#">This is a link</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="add">
+          <button onclick="document.getElementById('id01').style.display='block'" class="btn-floating btn-large waves-effect waves-light red"><i class="fa-solid fa-plus"></i></button>
+        </div>
+      </div>
+
+      <footer class="page-footer orange darken-3">
+        <div class="footer-copyright">
+          <div class="container">© 2022 Frontend</div>
+        </div>
+      </footer>
+    </div>
+    <!-- app -->
+
+    <!-- Materialize JavaScript CDN -->
+    
+    <!-- Trigger/Open the Modal -->
+    <div class="w3-container">
+      <div id="id01" class="w3-modal">
+        <div class="w3-modal-content">
+          <header class="w3-container w3-teal"> 
+            <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+            <h2>Criar Task</h2>
+          </header>
+          <div class="container">
+            <div class="section">
+              <!--   Icon Section   -->
+              <div class="row">
+                <div class="col s12" id="elTasks">
+                  <!-- New tasks area-->
+                  <div class="card horizontal">
+                    <div class="card-stacked">
+                      <div class="card-content">
+                        <h2>New Task</h2>
+                        <form action="">
+                          <div class="input-field col s12">
+                            <input placeholder="Title" id="title" type="text" class="validate" required />
+                            <label for="title">Title</label>
+                          </div>
+      
+                          <div class="input-field col s12">
+                            <select id="project">
+                              <option value="" disabled selected>Choose your option</option>
+                              <option value="Estudos">Estudos</option>
+                              <option value="Financeiro">Financeiro</option>
+                              <option value="Trabalho">Trabalho</option>
+                            </select>
+                            <label for="project">Pick a Project</label>
+                          </div>
+      
+                          <div class="input-field col s12">
+                            <input type="text" class="datepicker" id="dueTo" />
+                            <label for="dueTo">Date due to</label>
+                          </div>
+      
+                          <a class="waves-effect waves-light btn-large" id="btnSave">Save</a>
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <footer class="w3-container w3-teal">
+            <p></p>
+          </footer>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="./todo.js"></script>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function () {
+        var elems, instances
+        // Initialize select
+        elems = document.querySelectorAll('select')
+        instances = M.FormSelect.init(elems, {})
+        // Initialize data picker
+        elems = document.querySelectorAll('.datepicker')
+        nstances = M.Datepicker.init(elems, {})
+      })
+      document.querySelector('#btnSave').addEventListener('click', (event) => {
+        event.preventDefault()
+        let title = document.getElementById('title').value
+        let project = document.getElementById('project').value
+        let dueTo = document.getElementById('dueTo').value
+        saveTask({ title, project, dueTo })
+      })
+    </script>
+  </body>
+</html>
+
+<!-- npm init --> 
+<!-- npm install json-server --save -->
+<!-- npm install -g json-server -->
+<!-- json-server --watch db.json -->
