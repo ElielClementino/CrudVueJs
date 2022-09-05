@@ -1,44 +1,60 @@
 var app = new Vue({
     el:'#app',
-    data(){
-        return{
-            tasks:[],
-            title:null,
-            project:null,
-            dueTo:null,
+    data:{
+        tasks:[],
+        newTask:{
+        'title':null,
+        'project':null,
+        'dueTo':null,
         }
     },
     methods: {
         getTasks() {
-          fetch("http://localhost:3000/taks")
+          fetch("http://localhost:3000/tasks/")
             .then((response) => response.json())
-            .then((tasks) =>{
-            console.log(tasks)
-            this.tasks = tasks
-        })},
+            .then((data) =>{
+            this.tasks = data;
+        });
+      },
+        saveTask(){
+          const taskData = {
+            title:this.newTask.title,
+            project:this.newTask.project,
+            date:this.newTask.date,
+          }
+          fetch("http://localhost:3000/tasks/", {
+            method: 'POST',
+            headers: {'Content-Type' : 'application/json; charset=UTF-8'},
+            body: JSON.stringify(taskData)
+          }).then(() =>{
+            this.getTasks()
+          })
+        },
+        deleteTask(id) {
+          fetch(`http://localhost:3000/tasks/${id}`, { method: "DELETE" });
+        },
     },
     created(){
         this.getTasks();
     },
 });
 
-function saveTask(task) {
-  fetch(`http://localhost:3000/taks`, {
-    method: 'POST',
-    body: JSON.stringify({
-      title: task.title,
-      project: task.project,
-      dueTo: new Date(task.dueTo).toISOString(),
-    }),
-    headers: {
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
-  })
-    .then((res) => res.json())
-    .then((newTask) => {
-      console.log('DONE', newTask)
-    })
-    .catch((error) => {
-      console.log('Erro adicionando task:', error)
-    })
-}
+
+
+
+
+
+
+
+// editTask(id) {
+//   fetch(`http://localhost:3000/tasks/${id}`, {
+//     method: 'PUT',
+//     headers: {
+//       'Content-Type': 'application/json'
+//     },
+//     body: JSON.stringify(this.newTask)
+//   })
+//     .then((data) =>{
+//       response.text()
+//     })
+// },

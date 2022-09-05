@@ -1,5 +1,5 @@
 {
-  "taks": [
+  "tasks": [
     {
       "id": 1,
       "title": "Estudar Flexbox",
@@ -13,18 +13,6 @@
       "dueTo": "2022-05-01T12:00:00.000Z",
       "project": "Estudos",
       "usuario": "joao@example.com"
-    },
-    {
-      "title": "eliel",
-      "project": "Financeiro",
-      "dueTo": "2022-09-13T03:00:00.000Z",
-      "id": 3
-    },
-    {
-      "title": "eliel",
-      "project": "Financeiro",
-      "dueTo": "2022-09-27T03:00:00.000Z",
-      "id": 4
     }
   ]
 }

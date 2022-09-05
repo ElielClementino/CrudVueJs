@@ -30,7 +30,6 @@
 
       <div class="container">
         <div class="section">
-          <!--   Icon Section   -->
           <div class="row">
             <!-- card de tarefa que repete para cada item do array -->
             <div v-for="tarefa in tasks" class="card horizontal">
@@ -39,8 +38,8 @@
                   <p>{{tarefa.title}} <span class="new badge" data-badge-caption="">{{tarefa.dueTo}}</span> <div class="chip">{{tarefa.project}}</div></p>
                 </div>
                 <div class="card-action">
-                  <a href="#"><i class="fa-solid fa-pen-to-square"></i></a>
-                  <a href="#"><i class="fa-solid fa-trash-can"></i></a>
+                  <a href="#"><i class="fa-solid fa-pen-to-square" onclick="document.getElementById('id02').style.display='block'" ></i></a>
+                  <a href="#"><i class="fa-solid fa-trash-can" @click.self="deleteTask(tarefa.id)"></i></a>
                 </div>
               </div>
             </div>
@@ -61,7 +60,7 @@
 
     <!-- Materialize JavaScript CDN -->
     
-    <!-- Trigger/Open the Modal -->
+    <!-- Trigger/Open the Modal --> <!--ADD MODAL-->
     <div class="w3-container">
       <div id="id01" class="w3-modal">
         <div class="w3-modal-content">
@@ -79,14 +78,14 @@
                     <div class="card-stacked">
                       <div class="card-content">
                         <h2>New Task</h2>
-                        <form action="">
+                        <form  action="">
                           <div class="input-field col s12">
-                            <input placeholder="Title" id="title" type="text" class="validate" required />
+                            <input v-model="newTask.title" placeholder="Title" id="title" type="text" class="validate" required />
                             <label for="title">Title</label>
                           </div>
       
                           <div class="input-field col s12">
-                            <select id="project">
+                            <select id="project" v-model='newTask.project'>
                               <option value="" disabled selected>Choose your option</option>
                               <option value="Estudos">Estudos</option>
                               <option value="Financeiro">Financeiro</option>
@@ -96,11 +95,11 @@
                           </div>
       
                           <div class="input-field col s12">
-                            <input type="text" class="datepicker" id="dueTo" />
-                            <label for="dueTo">Date due to</label>
+                            <input v-model="newTask.dueTo" type="text" class="datepicker" id="dueTo" />
+                            <label for="dueTo" >Date due to</label>
                           </div>
       
-                          <a class="waves-effect waves-light btn-large" id="btnSave">Save</a>
+                          <button type="submit" class="waves-effect waves-light btn-large" id="btnSave" @click="saveTask" >Save</button>  
                         </form>
                       </div>
                     </div>
@@ -116,6 +115,62 @@
       </div>
     </div>
 
+    <!--EDIT MODAL-->
+        <!-- Trigger/Open the Modal -->
+        <div class="w3-container">
+          <div id="id02" class="w3-modal">
+            <div class="w3-modal-content">
+              <header class="w3-container w3-teal"> 
+                <span onclick="document.getElementById('id02').style.display='none'" class="w3-button w3-display-topright">&times;</span>
+                <h2>Editar Task</h2>
+              </header>
+              <div class="container">
+                <div class="section">
+                  <!--   Icon Section   -->
+                  <div class="row">
+                    <div class="col s12" id="elTasks">
+                      <!-- New tasks area-->
+                      <div class="card horizontal">
+                        <div class="card-stacked">
+                          <div class="card-content">
+                            <h2>Edit Task</h2>
+                            <form action="">
+                              <div class="input-field col s12">
+                                <input v-model="newTask.title" placeholder="Title" id="title" type="text" class="validate" required />
+                                <label for="title">Title</label>
+                              </div>
+          
+                              <div class="input-field col s12">
+                                <select id="project" v-model='newTask.project'>
+                                  <option value="" disabled selected>Choose your option</option>
+                                  <option value="Estudos">Estudos</option>
+                                  <option value="Financeiro">Financeiro</option>
+                                  <option value="Trabalho">Trabalho</option>
+                                </select>
+                                <label for="project">Pick a Project</label>
+                              </div>
+          
+                              <div class="input-field col s12">
+                                <input v-model="newTask.dueTo" type="text" class="datepicker" id="dueTo" />
+                                <label for="dueTo">Date due to</label>
+                              </div>
+          
+                              <a class="waves-effect waves-light btn-large" id="btnSave">edit</a>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <footer class="w3-container w3-teal">
+                <p></p>
+              </footer>
+            </div>
+          </div>
+        </div>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="./todo.js"></script>
 
@@ -128,13 +183,6 @@
         // Initialize data picker
         elems = document.querySelectorAll('.datepicker')
         nstances = M.Datepicker.init(elems, {})
-      })
-      document.querySelector('#btnSave').addEventListener('click', (event) => {
-        event.preventDefault()
-        let title = document.getElementById('title').value
-        let project = document.getElementById('project').value
-        let dueTo = document.getElementById('dueTo').value
-        saveTask({ title, project, dueTo })
       })
     </script>
   </body>
