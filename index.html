@@ -20,14 +20,15 @@
       referrerpolicy="no-referrer"
     />
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
-    <link rel="stylesheet" href="./style.css" />
   </head>
   <body>
     <div id="app">
       <nav class="orange darken-2">
         <div class="nav-wrapper"></div>
       </nav>
-
+      <div class="add">
+        <button class="btn-floating btn-large waves-effect waves-light red" @click="addTaskPrompt"><i class="fa-solid fa-plus"></i></button>
+      </div>
       <div class="container">
         <div class="section">
           <div class="row">
@@ -38,17 +39,69 @@
                   <p>{{tarefa.title}} <span class="new badge" data-badge-caption="">{{tarefa.dueTo}}</span> <div class="chip">{{tarefa.project}}</div></p>
                 </div>
                 <div class="card-action">
-                  <a href="#"><i class="fa-solid fa-pen-to-square" onclick="document.getElementById('id02').style.display='block'" ></i></a>
-                  <a href="#"><i class="fa-solid fa-trash-can" @click.self="deleteTask(tarefa.id)"></i></a>
+                  <a ><i class="fa-solid fa-pen-to-square" @click.self="getTask(tarefa.id)"></i></a>
+                  <a ><i class="fa-solid fa-trash-can" @click.self="deleteTask(tarefa.id)"></i></a>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="add">
-          <button onclick="document.getElementById('id01').style.display='block'" class="btn-floating btn-large waves-effect waves-light red"><i class="fa-solid fa-plus"></i></button>
-        </div>
       </div>
+
+      <!--Formulário de adicionar paciente-->
+      <div  class="section task-add" :style="styleAdd">
+          <h2>Adicionar Tarefa </h2>
+          <div class="row">
+            <div class="input-field col s12">
+              <input v-model="newTask.title" placeholder="Entre com uma tarefa" id="title" type="text" class="validate"
+              />
+              <label for="title">Tarefa</label>
+            </div>
+            <div class="input-field col s12">
+              <select id="project" v-model='newTask.project'>
+                <option value="" disabled selected>Choose your option</option>
+                <option value="Estudos">Estudos</option>
+                <option value="Financeiro">Financeiro</option>
+                <option value="Trabalho">Trabalho</option>
+              </select>
+              <label for="project">Pick a Project</label>
+            </div>
+            <div class="input-field col s6">
+              <input v-model="newTask.dueTo" type="text" class="datepicker" />
+              <label for="date">Data Vencimento</label>
+            </div>
+          </div>
+          <button class="btn-floating btn-large waves-effect waves-light red" @click="saveTask"><i class="fa-solid fa-plus"></i></button>
+        </div>
+
+        <!--Formulário de editar task -->
+        <div  class="section task-add" :style="styleEdit">
+          <h2>Editar Tarefa </h2>
+          <div class="row">
+            <div class="input-field col s12">
+              <input v-model="newTask.title" placeholder="Entre com uma tarefa" id="title" type="text" class="validate"
+              />
+              <label for="title">Tarefa</label>
+            </div>
+            <div class="input-field col s12">
+              <select id="project" v-model='newTask.project'>
+                <option value="" disabled selected>Choose your option</option>
+                <option value="Estudos">Estudos</option>
+                <option value="Financeiro">Financeiro</option>
+                <option value="Trabalho">Trabalho</option>
+              </select>
+              <label for="project">Pick a Project</label>
+            </div>
+            <div class="input-field col s6">
+              <input v-model="newTask.dueTo" type="text" class="datepicker" />
+              <label for="date">Data Vencimento</label>
+            </div>
+            <div class="add">
+              <button class="btn-floating btn-large waves-effect waves-light red" @click="editTask"><i class="fa-solid fa-plus"></i></button>
+            </div>
+          </div>
+          </div>
+        <!--Fim edit task-->
 
       <footer class="page-footer orange darken-3">
         <div class="footer-copyright">
@@ -56,121 +109,6 @@
         </div>
       </footer>
     </div>
-    <!-- app -->
-
-    <!-- Materialize JavaScript CDN -->
-    
-    <!-- Trigger/Open the Modal --> <!--ADD MODAL-->
-    <div class="w3-container">
-      <div id="id01" class="w3-modal">
-        <div class="w3-modal-content">
-          <header class="w3-container w3-teal"> 
-            <span onclick="document.getElementById('id01').style.display='none'" class="w3-button w3-display-topright">&times;</span>
-            <h2>Criar Task</h2>
-          </header>
-          <div class="container">
-            <div class="section">
-              <!--   Icon Section   -->
-              <div class="row">
-                <div class="col s12" id="elTasks">
-                  <!-- New tasks area-->
-                  <div class="card horizontal">
-                    <div class="card-stacked">
-                      <div class="card-content">
-                        <h2>New Task</h2>
-                        <form  action="">
-                          <div class="input-field col s12">
-                            <input v-model="newTask.title" placeholder="Title" id="title" type="text" class="validate" required />
-                            <label for="title">Title</label>
-                          </div>
-      
-                          <div class="input-field col s12">
-                            <select id="project" v-model='newTask.project'>
-                              <option value="" disabled selected>Choose your option</option>
-                              <option value="Estudos">Estudos</option>
-                              <option value="Financeiro">Financeiro</option>
-                              <option value="Trabalho">Trabalho</option>
-                            </select>
-                            <label for="project">Pick a Project</label>
-                          </div>
-      
-                          <div class="input-field col s12">
-                            <input v-model="newTask.dueTo" type="text" class="datepicker" id="dueTo" />
-                            <label for="dueTo" >Date due to</label>
-                          </div>
-      
-                          <button type="submit" class="waves-effect waves-light btn-large" id="btnSave" @click="saveTask" >Save</button>  
-                        </form>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <footer class="w3-container w3-teal">
-            <p></p>
-          </footer>
-        </div>
-      </div>
-    </div>
-
-    <!--EDIT MODAL-->
-        <!-- Trigger/Open the Modal -->
-        <div class="w3-container">
-          <div id="id02" class="w3-modal">
-            <div class="w3-modal-content">
-              <header class="w3-container w3-teal"> 
-                <span onclick="document.getElementById('id02').style.display='none'" class="w3-button w3-display-topright">&times;</span>
-                <h2>Editar Task</h2>
-              </header>
-              <div class="container">
-                <div class="section">
-                  <!--   Icon Section   -->
-                  <div class="row">
-                    <div class="col s12" id="elTasks">
-                      <!-- New tasks area-->
-                      <div class="card horizontal">
-                        <div class="card-stacked">
-                          <div class="card-content">
-                            <h2>Edit Task</h2>
-                            <form action="">
-                              <div class="input-field col s12">
-                                <input v-model="newTask.title" placeholder="Title" id="title" type="text" class="validate" required />
-                                <label for="title">Title</label>
-                              </div>
-          
-                              <div class="input-field col s12">
-                                <select id="project" v-model='newTask.project'>
-                                  <option value="" disabled selected>Choose your option</option>
-                                  <option value="Estudos">Estudos</option>
-                                  <option value="Financeiro">Financeiro</option>
-                                  <option value="Trabalho">Trabalho</option>
-                                </select>
-                                <label for="project">Pick a Project</label>
-                              </div>
-          
-                              <div class="input-field col s12">
-                                <input v-model="newTask.dueTo" type="text" class="datepicker" id="dueTo" />
-                                <label for="dueTo">Date due to</label>
-                              </div>
-          
-                              <a class="waves-effect waves-light btn-large" id="btnSave">edit</a>
-                            </form>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <footer class="w3-container w3-teal">
-                <p></p>
-              </footer>
-            </div>
-          </div>
-        </div>
-    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
     <script src="./todo.js"></script>
 
